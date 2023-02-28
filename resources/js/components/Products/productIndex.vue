@@ -34,15 +34,19 @@
                 </tr>
             </tbody>
         </table>
+        <paginate :links ="links" @changePage="changePage"></paginate>
   </div>
 </template>
 
 <script>
+import paginate from '../general/paginate.vue';
   export default {
+  components: { paginate },
       data() {
         return {
           products: [],
           searchData: {},
+          links: {},
         }
       },
       methods: {
@@ -56,15 +60,24 @@
           e.preventDefault();
           const response = await this.axios.post(this.$baseurl, this.searchData);
           // this.posts = response.data.data;
+        },
+        async changePage(PageUrl){
+          const response = await this.axios.get(PageUrl);
+          this.products = response.data.data;
+          this.links = response.data.meta.links
         }
       },
       async created() {
       try {
         const response = await this.axios.get(this.$baseurl+'prod/')
         this.products = response.data.data;
+        this.links = response.data.meta.links
       } catch (e) {
         this.errors.push(e)
       }
+    },
+    comments:{
+      paginate,
     }
   }
 </script>

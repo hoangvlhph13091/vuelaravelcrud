@@ -25,6 +25,11 @@ const routers =  [
         path: '/prod/create',
         name: 'prodCreate',
         component: () => import('./components/Products/createProductComponent.vue')
+    },
+    {
+        path: '/test',
+        name: 'test',
+        component: () => import('./components/test/testing.vue')
     }
 ]
 

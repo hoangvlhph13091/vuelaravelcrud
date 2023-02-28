@@ -21,7 +21,7 @@ class ProdController extends Controller
     }
 
     public function index() {
-        $products = Product::with('post:id,title')->get();
+        $products = Product::with('post:id,title')->paginate(5);
         return ProductResource::collection($products)->response()->getData(true);
         // return response()->json($products);
     }
@@ -31,22 +31,16 @@ class ProdController extends Controller
      */
     public function add(ProductRequest $request)
     {
-        dd($request->except(['_token']));
         $data = $request->except(['_token']);
         try {
              $result = $this->productService->saveProductData($data);
         } catch (Exception $e) {
             return $result = $e->getMessage();
         }
-        return new ProductResource($result);
+        return new ProductResource($result); 
        
 
     }
 
-    public function paginate($offSet) {
-        $products = Product::with('post:id,title')->offSet($offSet)->limit(5)->get();
-        return ProductResource::collection($products)->response()->getData(true);
-        // return response()->json($products);
-    }
 
 }

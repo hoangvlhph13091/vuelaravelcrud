@@ -1,76 +1,38 @@
+<template>
+    <div>
+        <div class="flex flex-wrap mt-8">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li :class="link.active == true ? 'page-item active' : 'page-item'" v-for="link in links" :key="link.id">
+                <a v-if="link.url != null" class="page-link disabled" v-html="link.label" :href="link.url" @click="changePage"></a>
+                <a v-if="link.url == null" class="page-link disabled" v-html="link.label" :href="link.url"></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+    </div>
+</template>
+
 <script>
 export default {
+  name: 'paginate',
   props: {
-    maxVisibleButtons: {
-      type: Number,
-      required: false,
-      default: 3
+        links: {type: Object}
     },
-    totalPages: {
-      type: Number,
-      required: true
+  data() {
+        return {
+            
+        }
     },
-    total: {
-      type: Number,
-      required: true
-    },
-    currentPage: {
-      type: Number,
-      required: true
+  methods: {
+      changePage(e){
+      e.preventDefault();
+      const PageUrl = e.target.href;
+      this.$emit('changePage', PageUrl)
+      
     }
   },
-  computed: {
-    startPage() {
-      // When on the first page
-      if (this.currentPage === 1) {
-        return 1;
-      }
-      // When on the last page
-      if (this.currentPage === this.totalPages) {
-        return this.totalPages - this.maxVisibleButtons;
-      }
-      // When in between
-      return this.currentPage - 1;
-    },
-    pages() {
-      const range = [];
-
-      for (let i = this.startPage;
-        i <= Math.min(this.startPage + this.maxVisibleButtons - 1, this.totalPages);
-        i+= 1 ) {
-        range.push({
-          name: i,
-          isDisabled: i === this.currentPage
-        });
-      }
-
-      return range;
-    },
-  }
-};
+  mounted() {
+  },
+}
 </script>
-<template>
-  <ul>
-    <li>
-      <button type="button">
-        First
-      </button>
-    </li>
-    <li>
-      <button type="button">
-        Previous
-      </button>
-    </li>
-    <!-- Range of pages -->
-    <li>
-      <button type="button">
-        Next
-      </button>
-    </li>
-    <li>
-      <button type="button">
-        Last
-      </button>
-    </li>
-  </ul>
-</template>

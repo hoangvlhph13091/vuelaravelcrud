@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
     protected $table ='products';
-    protected $fillable=['title','content'];
+    protected $fillable=['name','content', 'price', 'image', 'postID'];
 
     public function post(){
         return $this->belongsTo(Post::class,'postID','id');

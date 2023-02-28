@@ -28,7 +28,8 @@ class ProductService
 
     public function saveProductData($data) 
     {
-       
+            $path = $data['image']->store('public/image/');
+            $data['image'] = $path;
             $result = $this->productRepository->save($data);
             return $result;
        

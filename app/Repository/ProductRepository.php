@@ -8,23 +8,25 @@ use App\Http\Resources\ProductResource;
 class ProductRepository
 {
 
-    protected $post;
+    protected $product;
 
-    public function __construct(Product $products)
+    public function __construct(Product $product)
     {
-        $this->products = $products;
+        $this->product = $product;
     }
 
     public function save($data)
     {
-        // $post = new $this->post;
+        $product = new $this->product;
+        $product->name = $data['name'];
+        $product->price = $data['price'];
+        $product->postID = $data['postID'];
+        $product->content = $data['content'];
+        $product->image = $data['image'];
 
-        // $post->title = $data['title'];
-        // $post->content = $data['content'];
+        $product->save();
 
-        // $post->save();
-
-        // return $post->fresh();
+        return $product->fresh();
     }
 
     public function getAll()

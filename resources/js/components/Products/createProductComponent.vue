@@ -7,7 +7,7 @@
               </div>
                     
               <div class="card-body">
-                <form id="form_data" @submit="addPost">
+                <form id="form_data" @submit="addPost" enctype="multipart/form-data">
                 <div class="row">
                     
                     <div class="col-md-6">
@@ -15,7 +15,7 @@
                         <label>Product Name :</label>
                         <input type="text" v-model="product.name" class="form-control" >
                         <div class="" style="color: red">
-                            <p>{{this.errors.name ? this.errors.name[0] : '' }}</p>
+                            <p>{{this.errors.name != null ? this.errors.name[0] : '' }}</p>
                         </div>
                     </div>
                     <div class="form-group">
@@ -24,6 +24,10 @@
                         <div class="" style="color: red">
                             <p>{{this.errors.price ? this.errors.price[0] : '' }}</p>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Price :</label>
+                        <input type="file" @change="addFileName" class="form-control">
                     </div>
                     <div class="form-group">
                         <label>Product PostID :</label>
@@ -64,18 +68,28 @@
             return {
                 product: {},
                 errors: {},
-                posts: {}
+                posts: {},
+                file:{}
             }
         },
         methods: {
+            addFileName(e){
+                this.file = e.target.files[0];
+            },
             async addPost(e) {
                 e.preventDefault();
+                const config = {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    }
+                }
+                this.product.image = this.file
                 try {
-                    const response = await this.axios.post(this.$baseurl+'prod/create', this.product)
-                    console.log(response)
+                    const response = await this.axios.post(this.$baseurl+'prod/create', this.product, config)
+                    this.$router.push({ path: '/prod/' })
                 } catch (e) {
                     this.errors = e.response.data.errors
-                    console.log(e.response.data.errors)
                 }
                 
                 

@@ -27,9 +27,9 @@ const routers =  [
         component: () => import('./components/Products/createProductComponent.vue')
     },
     {
-        path: '/test',
-        name: 'test',
-        component: () => import('./components/test/testing.vue')
+        path: '/prod/import',
+        name: 'prodImport',
+        component: () => import('./components/Products/importExcel.vue')
     }
 ]
 

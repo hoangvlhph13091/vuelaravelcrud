@@ -10,6 +10,9 @@
           </div>
           <div class="col-md-2">
             <router-link :to="{name: 'prodCreate'}" class="btn btn-primary">Create Product</router-link>
+            <br>
+            <br>
+            <router-link :to="{name: 'prodImport'}" class="btn btn-primary">Import Products</router-link>
           </div>
         </div><br />
 
@@ -47,6 +50,7 @@ import paginate from '../general/paginate.vue';
           products: [],
           searchData: {},
           links: {},
+          file: {},
         }
       },
       methods: {
@@ -65,6 +69,13 @@ import paginate from '../general/paginate.vue';
           const response = await this.axios.get(PageUrl);
           this.products = response.data.data;
           this.links = response.data.meta.links
+        },
+        async importExcel(e){
+          const response = await this.axios.get(this.$baseurl+'prod/import');
+          console.log(response);
+          // this.products = response.data.data;
+          // this.links = response.data.meta.links
+
         }
       },
       async created() {
@@ -76,8 +87,5 @@ import paginate from '../general/paginate.vue';
         this.errors.push(e)
       }
     },
-    comments:{
-      paginate,
-    }
   }
 </script>

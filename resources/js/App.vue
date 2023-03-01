@@ -8,9 +8,6 @@
         <li class="nav-item">
           <router-link :to="{name: 'prodIndex'}" class="nav-link">Products</router-link>
         </li>
-        <li class="nav-item">
-          <router-link :to="{name: 'test'}" class="nav-link">testing thing</router-link>
-        </li>
       </ul>
     </nav><br/>
       <router-view></router-view>

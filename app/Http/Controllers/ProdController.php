@@ -56,20 +56,34 @@ class ProdController extends Controller
         $path = addslashes($path);
         $time = date('Y/m/d H:i:s');
 
-        $query = <<<eof
+        $query1 = <<<eof
+                    CREATE TEMPORARY TABLE IF NOT EXISTS tmp_products AS SELECT * FROM products LIMIT 0
+
+                eof;
+        $query2 = <<<eof
                     LOAD DATA LOCAL INFILE '$path'
-                    INTO TABLE products
+                    INTO TABLE tmp_products
                     FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
                     LINES TERMINATED BY '\n'
                     IGNORE 1 LINES
                     (name,price,image,postID,content)
                     SET created_at = '$time', updated_at='$time'
                 eof;
+        $query3 = 'INSERT IGNORE INTO products SELECT * FROM tmp_products';
+        $query4 ='DROP TEMPORARY TABLE IF EXISTS tmp_products';
+        DB::beginTransaction();
         try {
-            DB::statement($query);
-            Storage::delete($path);
+                DB::statement($query1);
+                DB::statement($query2);
+                DB::statement($query3);
+                DB::statement($query4);
+                DB::commit();
+
+                Storage::delete($path);
+
             return response()->json()->getData(true);
         } catch (Exception $e) {
+            DB::rollBack();
             throw new Exception($e->getMessage());
         }
 

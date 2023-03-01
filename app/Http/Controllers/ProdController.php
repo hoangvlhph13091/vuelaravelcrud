@@ -90,5 +90,42 @@ class ProdController extends Controller
 
     }
 
+    public function export(){
+        $fileName = 'product.csv';
+        $products = Product::all();
+
+             $headers = array(
+                 "Content-type"        => "text/csv",
+                 "Content-Description" => "File Transfer",
+                 "Content-Disposition" => "attachment; filename=$fileName",
+                 "Pragma"              => "no-cache",
+                 "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
+                 "Expires"             => "0"
+             );
+
+             $columns = array('name', 'price', 'image', 'postID', 'content');
+
+             $callback = function() use($products, $columns) {
+                 $file = fopen('php://output', 'w');
+                 fputcsv($file, $columns);
+
+                 foreach ($products as $prod) {
+                     $row['name']  = $prod->name;
+                     $row['price']    = $prod->price;
+                     $row['image']    = $prod->image;
+                     $row['postID']  = $prod->postID;
+                     $row['content']  = $prod->content;
+
+                     fputcsv($file, array($row['name'], $row['price'], $row['image'], $row['postID'], $row['content']));
+                 }
+
+                 fclose($file);
+             };
+
+             return response()->stream($callback, 200, $headers);
+
+
+        }
+
 
 }

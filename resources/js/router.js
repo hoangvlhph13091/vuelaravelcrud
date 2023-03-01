@@ -30,6 +30,11 @@ const routers =  [
         path: '/prod/import',
         name: 'prodImport',
         component: () => import('./components/Products/importExcel.vue')
+    },
+    {
+        path: '/prod/export',
+        name: 'prodExport',
+        // component: () => import('./components/Products/importExcel.vue')
     }
 ]
 

@@ -21,7 +21,7 @@ export default {
     },
   data() {
         return {
-            
+
         }
     },
   methods: {
@@ -29,7 +29,7 @@ export default {
       e.preventDefault();
       const PageUrl = e.target.href;
       this.$emit('changePage', PageUrl)
-      
+
     }
   },
   mounted() {

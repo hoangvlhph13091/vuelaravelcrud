@@ -13,6 +13,9 @@
             <br>
             <br>
             <router-link :to="{name: 'prodImport'}" class="btn btn-primary">Import Products</router-link>
+            <br>
+            <br>
+            <button class="btn btn-primary" @click="exportProduct">Export Products</button>
           </div>
         </div><br />
 
@@ -56,9 +59,12 @@ import paginate from '../general/paginate.vue';
       methods: {
         deletePost(id) {
           // this.axios?.get(this.$baseurl+'delete/'+id).then(response => {
-          // let i = this.posts.map(item => item.id).indexOf(id); 
+          // let i = this.posts.map(item => item.id).indexOf(id);
           // this.posts.splice(i, 1)
           // });
+        },
+        async exportProduct(){
+            const response = await this.axios.post(this.$baseurl+'prod/export');
         },
         async search(e){
           e.preventDefault();

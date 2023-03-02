@@ -9,7 +9,6 @@ use Illuminate\Http\Response;
 use App\Http\Resources\ProductResource;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
-use Storage;
 
 class ProdController extends Controller
 {
@@ -79,7 +78,7 @@ class ProdController extends Controller
                 DB::statement($query4);
                 DB::commit();
 
-                Storage::delete($path);
+                unlink($path);
 
             return response()->json()->getData(true);
         } catch (Exception $e) {

@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use App\Http\Resources\ProductResource;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
 
 class ProdController extends Controller
 {
@@ -21,10 +22,20 @@ class ProdController extends Controller
         $this->productService = $productService;
     }
 
-    public function index() {
-        $products = Product::with('post:id,title')->paginate(5);
-        return ProductResource::collection($products)->response()->getData(true);
+    public function index()
+    {
+        $allproducts = Product::with('post:id,title')->paginate(5);
+        $products = ProductResource::collection($allproducts)->response()->getData(true);
+        return Inertia::render('Products/productIndex',[
+            'products' => $products,
+        ]);
     }
+
+    // public function show()
+    // {
+    //     $products = Product::with('post:id,title')->paginate(5);
+    //     return ProductResource::collection($products)->response()->getData(true);
+    // }
 
      /**
      * Store a newly created resource in storage.

@@ -30,7 +30,7 @@ Route::middleware('api')->group(function () {
 
 
     Route::prefix('prod')->group(function () {
-        Route::get('/', [App\Http\Controllers\ProdController::class, 'index'])->name('home');
+        Route::get('/', [App\Http\Controllers\ProdController::class, 'show'])->name('home');
         Route::post('/create', [App\Http\Controllers\ProdController::class, 'add'])->name('prodAdd');
         Route::post('/import', [App\Http\Controllers\ProdController::class, 'import'])->name('import');
         Route::post('/export', [App\Http\Controllers\ProdController::class, 'export'])->name('export');

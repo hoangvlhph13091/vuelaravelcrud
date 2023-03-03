@@ -1,17 +1,23 @@
-import {createApp} from 'vue';
+import './bootstrap';
+import '../css/app.css';
 
-import App from './App.vue';
-import axios from 'axios'
-import VueAxios from 'vue-axios'
-import router from './router';
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
-
-const app = createApp(App);
-app.config.globalProperties.$axios = axios;
-app.config.globalProperties.$baseurl = window.location.origin+'/api/';
-app.use(VueAxios, axios);
-app.use(router);
-app.mount('#app');
+createInertiaApp({
+    title: (title) => `${title} - ${appName}`,
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({ el, App, props, plugin }) {
+        return createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .use(ZiggyVue, Ziggy)
+            .mount(el);
+    },
+    progress: {
+        color: '#4B5563',
+    },
+});

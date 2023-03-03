@@ -27,6 +27,11 @@ const routers =  [
         component: () => import('./components/Products/createProductComponent.vue')
     },
     {
+        path: '/prod/edit/:id',
+        name: 'prodEdit',
+        component: () => import('./components/Products/editProductComponent.vue')
+    },
+    {
         path: '/prod/import',
         name: 'prodImport',
         component: () => import('./components/Products/importExcel.vue')

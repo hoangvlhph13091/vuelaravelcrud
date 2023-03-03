@@ -24,7 +24,6 @@ class ProdController extends Controller
     public function index() {
         $products = Product::with('post:id,title')->paginate(5);
         return ProductResource::collection($products)->response()->getData(true);
-        // return response()->json($products);
     }
 
      /**
@@ -41,6 +40,47 @@ class ProdController extends Controller
         return new ProductResource($result);
 
 
+    }
+
+    public function editForm($id)
+    {
+        $result = ['status' => 200];
+
+        try {
+            $result['data'] = $this->productService->getOne($id);
+            return new ProductResource($result['data']);
+
+        } catch (Exception $e) {
+            $result = [
+                'status' => 500,
+                'error' => $e->getMessage()
+            ];
+            return response()->json()->getData(true);
+
+        }
+    }
+
+    public function updatePord(ProductRequest $request, $id)
+    {
+        $data = $request->except(['_token']);
+
+        try {
+            $result['data'] = $this->productService->updatePordData($id, $data);
+            return new ProductResource($result['data']);
+
+        } catch (Exception $e) {
+            $result =[
+                'status' => 500,
+                'error' => $e->getMessage()->first(),
+            ];
+             return new ProductResource($result);
+        }
+    }
+
+    public function delete($id)
+    {
+        Product::destroy($id);
+        return response()->json('The post successfully deleted');
     }
 
     public function import(Request $request)

@@ -35,7 +35,7 @@
                     <td>{{ prod.name }}</td>
                     <td>{{ prod.price }}</td>
                     <td>{{ prod.postname }}</td>
-                    <td><router-link :to="{name: 'edit', params: { id: prod.id }}" class="btn btn-primary">Edit</router-link></td>
+                    <td><router-link :to="{name: 'prodEdit', params: { id: prod.id }}" class="btn btn-primary">Edit</router-link></td>
                     <td><button class="btn btn-danger" @click="deletePost(prod.id)">Delete</button></td>
                 </tr>
             </tbody>
@@ -58,10 +58,10 @@ import paginate from '../general/paginate.vue';
       },
       methods: {
         deletePost(id) {
-          // this.axios?.get(this.$baseurl+'delete/'+id).then(response => {
-          // let i = this.posts.map(item => item.id).indexOf(id);
-          // this.posts.splice(i, 1)
-          // });
+          this.axios?.get(this.$baseurl+'prod/delete/'+id).then(response => {
+          let i = this.products.map(item => item.id).indexOf(id);
+          this.products.splice(i, 1)
+          });
         },
         async exportProduct(){
             const config = {responseType: 'blob'}

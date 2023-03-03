@@ -12,7 +12,7 @@ class ProductResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request)
     {
         // return parent::toArray($request);
         return [
@@ -20,7 +20,9 @@ class ProductResource extends JsonResource
                 'name' => $this->name,
                 'price' => $this->price,
                 'image' => $this->image,
+                'content' => $this->content,
                 'postname' => $this->post->title,
+                'postID' => $this->post->id,
             ];
     }
 }

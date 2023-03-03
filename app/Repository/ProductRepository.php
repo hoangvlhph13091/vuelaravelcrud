@@ -41,20 +41,23 @@ class ProductRepository
 
     public function getOne($id)
     {
-        // return $this->post->find($id);
+        return $this->product->find($id);
     }
 
-    public function updatePost($id, $data)
+    public function updateProduct($id, $data)
     {
-        // $post = $this->post->find($id);
+        $product = $this->product->find($id);
 
-        // $post->title = $data['title'];
-        // $post->content = $data['content'];
+        $product->name = $data['name'];
+        $product->price = $data['price'];
+        $product->postID = $data['postID'];
+        $product->content = $data['content'];
+        $product->image = $data['image'];
 
-        // $post->save();
+        $product->save();
 
-        // return $post->fresh();
+        return $product->fresh();
 
     }
-    
+
 }

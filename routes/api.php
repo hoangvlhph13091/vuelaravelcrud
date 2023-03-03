@@ -24,7 +24,7 @@ Route::middleware('api')->group(function () {
     Route::get('/', [App\Http\Controllers\PostController::class, 'index'])->name('home');
     Route::post('/', [App\Http\Controllers\PostController::class, 'searchPost'])->name('search');
     Route::post('/create', [App\Http\Controllers\PostController::class, 'add'])->name('add');
-    Route::any('/delete/{id}', [App\Http\Controllers\PostController::class, 'delete'])->name('add');
+    Route::any('/delete/{id}', [App\Http\Controllers\PostController::class, 'delete'])->name('delete');
     Route::get('/edit/{id}', [App\Http\Controllers\PostController::class, 'editForm'])->name('editFrom');
     Route::post('/edit/{id}', [App\Http\Controllers\PostController::class, 'updatePost'])->name('edit');
 
@@ -34,6 +34,10 @@ Route::middleware('api')->group(function () {
         Route::post('/create', [App\Http\Controllers\ProdController::class, 'add'])->name('prodAdd');
         Route::post('/import', [App\Http\Controllers\ProdController::class, 'import'])->name('import');
         Route::post('/export', [App\Http\Controllers\ProdController::class, 'export'])->name('export');
+        Route::any('/delete/{id}', [App\Http\Controllers\ProdController::class, 'delete'])->name('delete');
+        Route::get('/edit/{id}', [App\Http\Controllers\ProdController::class, 'editForm'])->name('editFrom');
+        Route::post('/edit/{id}', [App\Http\Controllers\ProdController::class, 'updatePord'])->name('edit');
+
     });
 
 });

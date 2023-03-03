@@ -11,14 +11,14 @@ use InvalidArgumentException;
 
 class ProductService
 {
-    /** 
+    /**
      * @var $productRepository
      */
     protected $productRepository;
 
     /**
      * PostService constructor
-     * 
+     *
      * @param ProductRepository $productRepository
      */
     public function __construct(ProductRepository $productRepository)
@@ -26,35 +26,19 @@ class ProductService
         $this->productRepository = $productRepository;
     }
 
-    public function saveProductData($data) 
+    public function saveProductData($data)
     {
             $path = $data['image']->store('public/image/');
             $data['image'] = $path;
             $result = $this->productRepository->save($data);
             return $result;
-       
+
     }
 
-    // public function updatePostData($id, $data) 
-    // {
-    //     $validator = Validator::make($data,[
-            
-    //     ],[
-            
-    //     ]);
-    //     if ($validator->fails()){
-    //         $result =[
-    //             'status' => 'failed',
-    //             'error' => $validator->errors()->first(),
-    //         ];
-    //         return $result;
-    //     } else {
-    //         $result = $this->productRepository->updatePost($id, $data);
-
-    //         return $result;
-    //     }
-       
-    // }
+    public function updatePordData($id, $data)
+    {
+        return $this->productRepository->updateProduct($id, $data);
+    }
 
     public function getAll()
     {
@@ -68,7 +52,7 @@ class ProductService
 
     public function getOne($id)
     {
-        // return $this->productRepository->getOne($id);
+        return $this->productRepository->getOne($id);
     }
 }
 

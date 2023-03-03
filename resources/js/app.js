@@ -5,6 +5,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import router from './router';
 
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 
 
 const app = createApp(App);
